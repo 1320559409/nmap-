@@ -1,0 +1,62 @@
+#!/bin/bash
+# IPv6 UDP 端口扫描（自动检测 IPv6 可用性，优化参数）
+cd "$(dirname "$0")"
+
+if [ "$EUID" -ne 0 ]; then
+    echo "错误: 需要 root 权限运行（nmap -sU）" >&2
+    exit 1
+fi
+
+# 检测 IPv6 可用性
+if ! ip -6 route get 2001:4860:4860::8888 >/dev/null 2>&1; then
+    echo "警告: IPv6 不可用，跳过扫描" >&2
+    DATE=$(date +%Y%m%d)
+    OUT_DIR="$DATE"
+    mkdir -p "$OUT_DIR"
+    touch "$OUT_DIR/ipv6_udp.gnmap"
+    exit 0
+fi
+
+DATE=$(date +%Y%m%d)
+OUT_DIR="$DATE"
+mkdir -p "$OUT_DIR"
+
+if [ ! -f ipv6 ]; then
+    echo "错误: ipv6 文件不存在" >&2
+    exit 1
+fi
+
+if [ ! -s ipv6 ]; then
+    echo "错误: ipv6 文件为空" >&2
+    exit 1
+fi
+
+if [ ! -f uports ]; then
+    echo "错误: uports 文件不存在" >&2
+    exit 1
+fi
+
+UDP_PORTS=$(awk '{print $1}' uports | grep -E '^[0-9]+$' | tr '\n' ',' | sed 's/,$//')
+if [ -z "$UDP_PORTS" ]; then
+    echo "错误: uports 中没有有效端口号" >&2
+    exit 1
+fi
+
+TOTAL_IPS=$(wc -l < ipv6 | tr -d ' ')
+PORT_COUNT=$(echo "$UDP_PORTS" | tr ',' '\n' | wc -l)
+
+echo "========================================="
+echo "IPv6 UDP 端口扫描"
+echo "目标 IP 数: $TOTAL_IPS"
+echo "端口数: $PORT_COUNT"
+echo "参数: 速率 30~80包/秒, 重试3, 无主机超时, 扫描延迟1s"
+echo "========================================="
+
+nmap -6 -sU -Pn -n -v --stats-every 10s --randomize-hosts \
+     --min-rate 30 --max-rate 80 \
+     --max-retries 3 \
+     --min-rtt-timeout 200ms --max-rtt-timeout 4000ms \
+     --max-scan-delay 1s \
+     -p "$UDP_PORTS" -iL ipv6 -oG "$OUT_DIR/ipv6_udp.gnmap" --open
+
+echo "完成: $OUT_DIR/ipv6_udp.gnmap"

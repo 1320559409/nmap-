@@ -1,0 +1,101 @@
+#!/bin/bash
+# IPv4 TCP 服务探测（按端口分组并行，并发3，限速100，带进度，自动清理临时目录）
+cd "$(dirname "$0")"
+
+DATE=$(date +%Y%m%d)
+OUT_DIR="$DATE"
+GNMAP="$OUT_DIR/ipv4_tcp.gnmap"
+
+if [ ! -f "$GNMAP" ]; then
+    echo "错误: $GNMAP 不存在，请先运行 port_tcp4" >&2
+    exit 1
+fi
+
+OUTFILE="$OUT_DIR/service_ipv4_tcp"
+TMPDIR="$OUT_DIR/tmp_ipv4_$$"
+mkdir -p "$TMPDIR"
+
+trap 'rm -rf "$TMPDIR"' EXIT INT TERM
+
+> "$OUTFILE"
+
+declare -A PORT_IPS
+while IFS= read -r line; do
+    if [[ "$line" =~ ^Host:[[:space:]]+([0-9.]+)[[:space:]]*(\(\))?[[:space:]]+Ports:[[:space:]]*(.*) ]]; then
+        ip="${BASH_REMATCH[1]}"
+        ports_part="${BASH_REMATCH[3]}"
+        while [[ "$ports_part" =~ ([0-9]+)/open/tcp ]]; do
+            port="${BASH_REMATCH[1]}"
+            PORT_IPS["$port"]="${PORT_IPS["$port"]}$ip"$'\n'
+            ports_part="${ports_part#*/open/tcp}"
+        done
+    fi
+done < "$GNMAP"
+
+if [ ${#PORT_IPS[@]} -eq 0 ]; then
+    echo "未发现任何开放 TCP 端口，输出空文件" >&2
+    exit 0
+fi
+
+ALL_PORTS=($(printf '%s\n' "${!PORT_IPS[@]}" | sort -n))
+TOTAL_PORTS=${#ALL_PORTS[@]}
+CURRENT=0
+
+MAX_JOBS=3
+JOBS=0
+
+for port in "${ALL_PORTS[@]}"; do
+    CURRENT=$((CURRENT + 1))
+    IP_COUNT=$(echo -n "${PORT_IPS["$port"]}" | grep -c '^')
+    echo "[$CURRENT/$TOTAL_PORTS] 正在探测端口 $port (共 $IP_COUNT 个 IP)" >&2
+
+    ip_list_file="$TMPDIR/port_${port}"
+    echo -n "${PORT_IPS["$port"]}" > "$ip_list_file"
+    result_file="$TMPDIR/result_${port}"
+
+    (
+        nmap -sV -v -T3 --version-intensity 2 -Pn -n \
+             --max-rate 100 \
+             --host-timeout 120s --max-retries 2 \
+             --stats-every 5s \
+             -p "$port" -iL "$ip_list_file" -oG - | \
+        awk -v port="$port" '
+            /^Host:/ {
+                if (match($0, /Host: ([0-9.]+)/)) {
+                    ip = substr($0, RSTART+6, RLENGTH-6)
+                    gsub(/[()]/, "", ip)
+                } else {
+                    next
+                }
+                if (match($0, /Ports: /)) {
+                    rest = substr($0, RSTART+7)
+                    split(rest, entries, ",")
+                    for (i in entries) {
+                        if (match(entries[i], /([0-9]+)\/open\/tcp\/\/([^\/]+)/)) {
+                            p = substr(entries[i], RSTART, RLENGTH)
+                            split(p, parts, "/")
+                            port_num = parts[1]
+                            service = parts[5]
+                            if (service == "") service = "unknown"
+                            gsub(/\?/, "", service)
+                            # 已删除 sub(/\|.*/, "", service) 保留原始服务名
+                            if (port_num == port) {
+                                printf "%s\t%s\t%s\t%s\t%s\n", ip, port_num, "tcp", "open", service
+                            }
+                        }
+                    }
+                }
+            }
+        ' > "$result_file"
+    ) &
+
+    JOBS=$((JOBS + 1))
+    if [ $JOBS -ge $MAX_JOBS ]; then
+        wait -n
+        JOBS=$((JOBS - 1))
+    fi
+done
+
+wait
+cat "$TMPDIR"/result_* 2>/dev/null | sort -u > "$OUTFILE"
+echo "完成: $OUTFILE (共 $(wc -l < "$OUTFILE") 条)" >&2

@@ -1,0 +1,64 @@
+#!/bin/bash
+set -e
+cd "$(dirname "$0")"
+
+recover_ipv4() {
+    if ip -4 addr show eth0 | grep -q 'inet '; then
+        echo "    [OK] IPv4 normal: $(ip -4 addr show eth0 | grep 'inet ' | awk '{print $2}')" >&2
+        return 0
+    fi
+
+    echo "    [WARN] IPv4 lost! Recovering with nmcli..." >&2
+    
+    nmcli device reapply eth0 2>/dev/null && sleep 2
+    
+    if ! ip -4 addr show eth0 | grep -q 'inet '; then
+        echo "    [WARN] nmcli failed, trying dhclient..." >&2
+        dhclient -r eth0 2>/dev/null || true
+        sleep 1
+        dhclient eth0
+        sleep 5
+    fi
+    
+    if ip -4 addr show eth0 | grep -q 'inet '; then
+        echo "    [OK] Recovered: $(ip -4 addr show eth0 | grep 'inet ' | awk '{print $2}')" >&2
+        return 0
+    else
+        echo "    [FATAL] Cannot recover IPv4!" >&2
+        exit 1
+    fi
+}
+
+echo "========== 1/8 TCP IPv4 端口扫描 =========="
+./port_tcp4
+
+echo "========== 2/8 TCP IPv6 端口扫描 =========="
+./port_tcp6
+recover_ipv4
+
+echo "========== 3/8 TCP IPv4 服务探测 =========="
+./service_tcp4
+
+echo "========== 4/8 TCP IPv6 服务探测 =========="
+./service_tcp6
+recover_ipv4
+
+echo "========== 5/8 UDP IPv4 端口扫描 =========="
+./port_udp4
+
+echo "========== 6/8 UDP IPv6 端口扫描 =========="
+./port_udp6
+recover_ipv4
+
+echo "========== 7/8 UDP IPv4 服务探测 =========="
+./service_udp4
+
+echo "========== 8/8 UDP IPv6 服务探测 =========="
+./service_udp6
+recover_ipv4
+
+echo "========== 合并所有结果 =========="
+./process
+
+echo "全部完成！最终结果: $(date +%Y%m%d)/service_all.txt"
+

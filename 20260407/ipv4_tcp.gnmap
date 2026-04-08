@@ -1,0 +1,133 @@
+# Nmap 7.95 scan initiated Tue Apr  7 16:06:38 2026 as: /usr/lib/nmap/nmap -sS -Pn -n -v --stats-every 10s --randomize-hosts --min-rate 100 --max-rate 300 --max-retries 3 --min-rtt-timeout 200ms --max-rtt-timeout 4000ms -p 21,22,23,110,135,139,143,443,445,587,636,873,1080,1099,1433,1521,1883,2049,2181,2222,2375,2379,2888,3000,3128,3306,3389,3690,3888,4000,4040,4369,4440,4848,4899,5000,5005,5037,5432,5601,5631,5632,5673,5900,5984,6123,6379,7001,7051,7077,7180,7182,7848,8000,8009,8019,8020,8042,8048,8051,8069,8080,8081,8083,8086,8088,8123,8161,8443,8848,8880,8883,8888,8999,9000,9001,9004,9042,9043,9083,9092,9100,9200,9300,9876,9990,10000,10909,10911,11000,11111,11211,11434,18080,19888,20880,25000,25010,27017,27018,50000,50030,50070,50090,60000,60010,60030,61616 -iL ipv4 -oG 20260407/ipv4_tcp.gnmap --open
+# Ports scanned: TCP(108;21-23,110,135,139,143,443,445,587,636,873,1080,1099,1433,1521,1883,2049,2181,2222,2375,2379,2888,3000,3128,3306,3389,3690,3888,4000,4040,4369,4440,4848,4899,5000,5005,5037,5432,5601,5631-5632,5673,5900,5984,6123,6379,7001,7051,7077,7180,7182,7848,8000,8009,8019-8020,8042,8048,8051,8069,8080-8081,8083,8086,8088,8123,8161,8443,8848,8880,8883,8888,8999-9001,9004,9042-9043,9083,9092,9100,9200,9300,9876,9990,10000,10909,10911,11000,11111,11211,11434,18080,19888,20880,25000,25010,27017-27018,50000,50030,50070,50090,60000,60010,60030,61616) UDP(0;) SCTP(0;) PROTOCOLS(0;)
+Host: 221.5.69.48 ()	Status: Up
+Host: 221.5.69.48 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 157.148.1.204 ()	Status: Up
+Host: 157.148.1.204 ()	Ports: 8080/open/tcp//http-proxy///	Ignored State: filtered (107)
+Host: 122.13.5.239 ()	Status: Up
+Host: 122.13.5.239 ()	Ports: 8880/open/tcp//cddbp-alt///	Ignored State: filtered (107)
+Host: 157.148.81.63 ()	Status: Up
+Host: 157.148.81.63 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 157.148.81.81 ()	Status: Up
+Host: 157.148.81.81 ()	Ports: 443/open/tcp//https///, 8080/open/tcp//http-proxy///	Ignored State: filtered (106)
+Host: 157.255.158.101 ()	Status: Up
+Host: 157.255.158.101 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 163.204.159.24 ()	Status: Up
+Host: 163.204.159.24 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 157.148.74.159 ()	Status: Up
+Host: 157.148.74.159 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 27.43.226.9 ()	Status: Up
+Host: 27.43.226.9 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 157.148.81.56 ()	Status: Up
+Host: 157.148.81.56 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 157.148.81.95 ()	Status: Up
+Host: 157.148.81.95 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 123.138.11.157 ()	Status: Up
+Host: 123.138.11.157 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 123.138.66.108 ()	Status: Up
+Host: 123.138.66.108 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 157.148.81.9 ()	Status: Up
+Host: 157.148.81.9 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 122.13.0.134 ()	Status: Up
+Host: 122.13.0.134 ()	Ports: 8443/open/tcp//https-alt///	Ignored State: filtered (107)
+Host: 157.255.142.12 ()	Status: Up
+Host: 157.255.142.12 ()	Ports: 8080/open/tcp//http-proxy///	Ignored State: filtered (107)
+Host: 122.13.5.33 ()	Status: Up
+Host: 122.13.5.33 ()	Ports: 8880/open/tcp//cddbp-alt///	Ignored State: filtered (107)
+Host: 163.177.206.12 ()	Status: Up
+Host: 163.177.206.12 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 157.148.81.90 ()	Status: Up
+Host: 157.148.81.90 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 122.13.2.162 ()	Status: Up
+Host: 122.13.2.162 ()	Ports: 8883/open/tcp//secure-mqtt///	Ignored State: filtered (107)
+Host: 122.13.24.11 ()	Status: Up
+Host: 122.13.24.11 ()	Ports: 443/open/tcp//https///, 8443/open/tcp//https-alt///	Ignored State: filtered (106)
+Host: 122.13.6.156 ()	Status: Up
+Host: 122.13.6.156 ()	Ports: 8880/open/tcp//cddbp-alt///	Ignored State: filtered (107)
+Host: 120.87.97.19 ()	Status: Up
+Host: 120.87.97.19 ()	Ports: 443/open/tcp//https///, 8443/open/tcp//https-alt///	Ignored State: filtered (106)
+Host: 120.87.97.16 ()	Status: Up
+Host: 120.87.97.16 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 157.148.81.34 ()	Status: Up
+Host: 157.148.81.34 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 157.148.122.10 ()	Status: Up
+Host: 157.148.122.10 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 157.148.13.235 ()	Status: Up
+Host: 157.148.13.235 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 157.148.81.35 ()	Status: Up
+Host: 157.148.81.35 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 122.13.2.212 ()	Status: Up
+Host: 122.13.2.212 ()	Ports: 8883/open/tcp//secure-mqtt///
+Host: 122.13.4.203 ()	Status: Up
+Host: 122.13.4.203 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 157.122.231.100 ()	Status: Up
+Host: 157.122.231.100 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 157.148.1.196 ()	Status: Up
+Host: 157.148.1.196 ()	Ports: 8080/open/tcp//http-proxy///	Ignored State: filtered (107)
+Host: 157.255.158.136 ()	Status: Up
+Host: 157.255.158.136 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 112.91.136.40 ()	Status: Up
+Host: 112.91.136.40 ()	Ports: 443/open/tcp//https///
+Host: 122.13.24.16 ()	Status: Up
+Host: 122.13.24.16 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 157.255.142.4 ()	Status: Up
+Host: 157.255.142.4 ()	Ports: 8080/open/tcp//http-proxy///	Ignored State: filtered (107)
+Host: 122.13.1.34 ()	Status: Up
+Host: 122.13.1.34 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 157.148.81.68 ()	Status: Up
+Host: 157.148.81.68 ()	Ports: 1883/open/tcp//mqtt///	Ignored State: filtered (107)
+Host: 122.13.5.212 ()	Status: Up
+Host: 122.13.5.212 ()	Ports: 8880/open/tcp//cddbp-alt///	Ignored State: filtered (107)
+Host: 122.13.3.149 ()	Status: Up
+Host: 122.13.3.149 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 221.4.227.111 ()	Status: Up
+Host: 221.4.227.111 ()	Ports: 443/open/tcp//https///, 8443/open/tcp//https-alt///	Ignored State: filtered (106)
+Host: 157.255.158.102 ()	Status: Up
+Host: 157.255.158.102 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 221.11.103.31 ()	Status: Up
+Host: 221.11.103.31 ()	Ports: 443/open/tcp//https///
+Host: 114.66.248.237 ()	Status: Up
+Host: 114.66.248.237 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 157.148.81.69 ()	Status: Up
+Host: 157.148.81.69 ()	Ports: 443/open/tcp//https///
+Host: 114.66.248.208 ()	Status: Up
+Host: 114.66.248.208 ()	Ports: 18080/open/tcp/////	Ignored State: filtered (107)
+Host: 122.13.5.46 ()	Status: Up
+Host: 122.13.5.46 ()	Ports: 8880/open/tcp//cddbp-alt///
+Host: 122.13.2.230 ()	Status: Up
+Host: 122.13.2.230 ()	Ports: 443/open/tcp//https///, 8000/open/tcp//http-alt///, 8080/open/tcp//http-proxy///, 8443/open/tcp//https-alt///
+Host: 122.13.4.144 ()	Status: Up
+Host: 122.13.4.144 ()	Ports: 8883/open/tcp//secure-mqtt///	Ignored State: filtered (107)
+Host: 157.255.158.99 ()	Status: Up
+Host: 157.255.158.99 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 157.255.158.100 ()	Status: Up
+Host: 157.255.158.100 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 211.95.193.53 ()	Status: Up
+Host: 211.95.193.53 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 58.253.2.23 ()	Status: Up
+Host: 58.253.2.23 ()	Ports: 443/open/tcp//https///, 8443/open/tcp//https-alt///	Ignored State: filtered (106)
+Host: 58.251.253.19 ()	Status: Up
+Host: 58.251.253.19 ()	Ports: 443/open/tcp//https///, 8443/open/tcp//https-alt///	Ignored State: filtered (106)
+Host: 120.81.177.236 ()	Status: Up
+Host: 120.81.177.236 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 112.93.251.144 ()	Status: Up
+Host: 112.93.251.144 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 27.43.226.11 ()	Status: Up
+Host: 27.43.226.11 ()	Ports: 443/open/tcp//https///, 8443/open/tcp//https-alt///	Ignored State: filtered (106)
+Host: 157.148.81.38 ()	Status: Up
+Host: 157.148.81.38 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 157.148.81.47 ()	Status: Up
+Host: 157.148.81.47 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 163.177.206.10 ()	Status: Up
+Host: 163.177.206.10 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 122.13.2.100 ()	Status: Up
+Host: 122.13.2.100 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 58.253.2.16 ()	Status: Up
+Host: 58.253.2.16 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 122.13.0.11 ()	Status: Up
+Host: 122.13.0.11 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 114.66.248.237 ()	Status: Up
+Host: 114.66.248.237 ()	Ports: 443/open/tcp//https///	Ignored State: filtered (107)
+Host: 218.104.196.41 ()	Status: Up
+Host: 218.104.196.41 ()	Ports: 8443/open/tcp//https-alt///
+# Nmap done at Tue Apr  7 17:57:03 2026 -- 4545 IP addresses (4545 hosts up) scanned in 6624.43 seconds

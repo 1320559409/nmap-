@@ -1,0 +1,41 @@
+#!/bin/bash
+# 合并所有服务结果（TCP+UDP，IPv4+IPv6），去重排序，五列对齐
+cd "$(dirname "$0")"
+
+DATE=$(date +%Y%m%d)
+OUT_DIR="$DATE"
+
+# 定义所有可能的服务结果文件
+SERVICE_FILES=(
+    "$OUT_DIR/service_ipv4_tcp"
+    "$OUT_DIR/service_ipv6_tcp"
+    "$OUT_DIR/service_ipv4_udp"
+    "$OUT_DIR/service_ipv6_udp"
+)
+
+TEMP_UNCOL="$OUT_DIR/service_all.uncol"
+FINAL="$OUT_DIR/service_all"
+
+# 清空临时文件
+> "$TEMP_UNCOL"
+
+# 合并所有存在的非空文件
+for file in "${SERVICE_FILES[@]}"; do
+    if [ -f "$file" ] && [ -s "$file" ]; then
+        cat "$file" >> "$TEMP_UNCOL"
+    fi
+done
+
+if [ ! -s "$TEMP_UNCOL" ]; then
+    echo "警告: 没有发现任何服务记录，输出空文件" >&2
+    touch "$FINAL"
+    exit 0
+fi
+
+# 去重排序，然后对齐
+sort -u "$TEMP_UNCOL" | column -t -s $'\t' > "$FINAL"
+rm -f "$TEMP_UNCOL"
+
+echo "完成: $FINAL (共 $(wc -l < "$FINAL") 条记录)"
+echo "前5行预览："
+head -5 "$FINAL"
