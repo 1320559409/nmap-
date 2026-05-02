@@ -2,7 +2,7 @@
 # IPv6 UDP 服务探测（并行度3，限速50，重试3，带进度，自动清理）
 cd "$(dirname "$0")"
 
-DATE=$(date +%Y%m%d)
+DATE=${SCAN_DATE:-$(date +%Y%m%d)}
 OUT_DIR="$DATE"
 GNMAP="$OUT_DIR/ipv6_udp.gnmap"
 
@@ -18,8 +18,10 @@ if [ ! -s "$GNMAP" ]; then
 fi
 
 OUTFILE="$OUT_DIR/service_ipv6_udp"
-TMP_DIR=$(mktemp -d -t udp_svc6.XXXXXX)
-trap 'rm -rf "$TMP_DIR"' EXIT INT TERM
+TMPDIR="$OUT_DIR/tmp_udp6_$$"
+mkdir -p "$TMPDIR"
+
+trap 'rm -rf "$TMPDIR"' EXIT INT TERM
 
 > "$OUTFILE"
 
@@ -48,22 +50,22 @@ fi
 TOTAL=${#IP_PORTS[@]}
 echo "开始 IPv6 UDP 服务探测，共 $TOTAL 个 IP，并行度 3，每个 nmap 限速 50 包/秒"
 
-TASK_LIST="$TMP_DIR/tasks"
+TASK_LIST="$TMPDIR/tasks"
 > "$TASK_LIST"
 for ip in "${!IP_PORTS[@]}"; do
     echo "$ip ${IP_PORTS[$ip]}" >> "$TASK_LIST"
 done
 
-COUNTER_FILE="$TMP_DIR/counter"
+COUNTER_FILE="$TMPDIR/counter"
 echo "0" > "$COUNTER_FILE"
 
-export TMP_DIR TOTAL COUNTER_FILE
+export TMPDIR TOTAL COUNTER_FILE
 
 cat "$TASK_LIST" | xargs -P 3 -I {} bash -c '
     ip=$(echo {} | cut -d" " -f1)
     ports=$(echo {} | cut -d" " -f2)
     safe_ip=$(echo "$ip" | tr ":" "_")
-    tmpout="$TMP_DIR/out_$$_$safe_ip"
+    tmpout="$TMPDIR/out_$$_$safe_ip"
 
     nmap -6 -sU -sV -v  --version-intensity 2 -Pn -n \
          --max-rate 50 \
@@ -100,5 +102,5 @@ cat "$TASK_LIST" | xargs -P 3 -I {} bash -c '
     ) 200>> "$COUNTER_FILE"
 '
 
-cat "$TMP_DIR"/out_* 2>/dev/null | sort -u >> "$OUTFILE"
+cat "$TMPDIR"/out_* 2>/dev/null | sort -u > "$OUTFILE"
 echo "完成: $OUTFILE (共 $(wc -l < "$OUTFILE") 条)" >&2

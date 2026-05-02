@@ -10,14 +10,14 @@ fi
 # 检测 IPv6 可用性
 if ! ip -6 route get 2001:4860:4860::8888 >/dev/null 2>&1; then
     echo "警告: IPv6 不可用，跳过扫描" >&2
-    DATE=$(date +%Y%m%d)
+    DATE=${SCAN_DATE:-$(date +%Y%m%d)}
     OUT_DIR="$DATE"
     mkdir -p "$OUT_DIR"
     touch "$OUT_DIR/ipv6_udp.gnmap"
     exit 0
 fi
 
-DATE=$(date +%Y%m%d)
+DATE=${SCAN_DATE:-$(date +%Y%m%d)}
 OUT_DIR="$DATE"
 mkdir -p "$OUT_DIR"
 

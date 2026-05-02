@@ -2,7 +2,7 @@
 # 合并所有服务结果（TCP+UDP，IPv4+IPv6），去重排序，五列对齐
 cd "$(dirname "$0")"
 
-DATE=$(date +%Y%m%d)
+DATE=${SCAN_DATE:-$(date +%Y%m%d)}
 OUT_DIR="$DATE"
 
 # 定义所有可能的服务结果文件
@@ -33,7 +33,15 @@ if [ ! -s "$TEMP_UNCOL" ]; then
 fi
 
 # 去重排序，然后对齐
-sort -u "$TEMP_UNCOL" | column -t -s $'\t' > "$FINAL"
+if command -v column >/dev/null 2>&1; then
+    sort -u "$TEMP_UNCOL" | column -t -s $'\t' > "$FINAL" 2>/dev/null || {
+        echo "警告: column 命令失败，使用原始格式" >&2
+        sort -u "$TEMP_UNCOL" > "$FINAL"
+    }
+else
+    echo "警告: column 命令不存在，使用原始格式" >&2
+    sort -u "$TEMP_UNCOL" > "$FINAL"
+fi
 rm -f "$TEMP_UNCOL"
 
 echo "完成: $FINAL (共 $(wc -l < "$FINAL") 条记录)"

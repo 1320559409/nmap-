@@ -7,7 +7,7 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
-DATE=$(date +%Y%m%d)
+DATE=${SCAN_DATE:-$(date +%Y%m%d)}
 OUT_DIR="$DATE"
 mkdir -p "$OUT_DIR"
 
