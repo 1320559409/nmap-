@@ -33,7 +33,40 @@ recover_ipv4() {
     fi
 }
 
+reset_network() {
+    echo "    [INFO] Checking and resetting network interface..." >&2
+     
+    # 暴力断开连接
+    nmcli device disconnect eth0 2>/dev/null || true
+    sleep 5
+    
+    # 重新连接
+    nmcli device connect eth0 2>/dev/null || true
+    sleep 10
+
+    # 检查 IPv4 是否恢复
+    if ip -4 addr show eth0 | grep -q 'inet '; then
+        echo "    [OK] Network reset successful: $(ip -4 addr show eth0 | grep 'inet ' | awk '{print $2}')" >&2
+        return 0
+    fi
+    
+    # 如果失败，重启 NetworkManager
+    echo "    [WARN] Device reconnect failed, restarting NetworkManager..." >&2
+    systemctl restart NetworkManager 2>/dev/null || true
+    sleep 15
+
+    if ip -4 addr show eth0 | grep -q 'inet '; then
+        echo "    [OK] Network recovered: $(ip -4 addr show eth0 | grep 'inet ' | awk '{print $2}')" >&2
+        return 0
+    else
+        echo "    [FATAL] Cannot recover IPv4!" >&2
+        ip -4 addr show eth0 >&2
+        exit 1
+    fi
+}
+
 echo "========== UDP IPv4 Port Scan =========="
+reset_network
 ./port_udp4
 
 echo "========== UDP IPv6 Port Scan =========="

@@ -9,7 +9,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # 检测 IPv6 可用性
-if ! ip -6 route get 2001:4860:4860::8888 >/dev/null 2>&1; then
+if ! ip -6 route get 2001:4860:4860::8888 >/dev/null 2>&1 || ! ip -6 addr show eth0 | grep -q 'inet6.*global'; then
     echo "警告: IPv6 不可用，跳过扫描" >&2
     DATE=${SCAN_DATE:-$(date +%Y%m%d)}
     OUT_DIR="$DATE"
@@ -55,9 +55,9 @@ echo "========================================="
 
 nmap -6 -sU -Pn -n -v --stats-every 10s --randomize-hosts \
      --min-rate 30 --max-rate 80 \
-     --max-retries 3 \
+     --max-retries 3 --host-timeout 60m \
      --min-rtt-timeout 200ms --max-rtt-timeout 4000ms \
-     --max-scan-delay 1s \
+     --max-scan-delay 2s \
      -p "$UDP_PORTS" -iL ipv6 -oG "$OUT_DIR/ipv6_udp.gnmap" --open
 
 echo "完成: $OUT_DIR/ipv6_udp.gnmap"
