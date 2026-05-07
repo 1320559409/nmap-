@@ -1,5 +1,5 @@
-112.91.136.38	161	udp	open	snmp
 120.80.136.10	161	udp	open	snmp
+120.80.136.11	161	udp	open	snmp
 120.80.136.142	161	udp	open	snmp
 120.80.136.143	161	udp	open	snmp
 120.80.136.162	161	udp	open	snmp
@@ -31,7 +31,6 @@
 221.4.188.209	161	udp	open	snmp
 221.4.66.66	53	udp	open	domain
 221.4.9.48	53	udp	open	domain
-27.40.0.46	53	udp	open	domain
 27.40.0.54	53	udp	open	domain
 27.40.10.22	53	udp	open	domain
 27.40.1.199	53	udp	open	domain
@@ -39,18 +38,18 @@
 27.40.23.150	53	udp	open	domain
 27.40.25.38	53	udp	open	domain
 27.40.26.58	53	udp	open	domain
+27.40.28.150	53	udp	open	domain
 27.40.30.14	53	udp	open	domain
 27.40.32.46	53	udp	open	domain
-27.40.36.142	53	udp	open	domain
 27.40.38.14	53	udp	open	domain
 27.40.40.6	53	udp	open	domain
 27.40.42.6	53	udp	open	domain
 27.40.44.6	53	udp	open	domain
+27.40.46.6	53	udp	open	domain
 27.40.48.6	53	udp	open	domain
 27.40.50.14	53	udp	open	domain
 27.40.52.6	53	udp	open	domain
 27.40.54.6	53	udp	open	domain
-27.40.56.6	53	udp	open	domain
 27.40.58.14	53	udp	open	domain
 27.40.60.6	53	udp	open	domain
 27.40.8.14	53	udp	open	domain
