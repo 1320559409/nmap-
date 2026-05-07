@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 # IPv4 TCP 服务探测（按IP并行，并发3，限速100，带进度，自动清理临时目录）
 cd "$(dirname "$0")"
 

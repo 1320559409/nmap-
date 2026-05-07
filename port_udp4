@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 # IPv4 UDP 端口扫描（手机热点优化：速率30~80包/秒，移除host-timeout，重试3）
 cd "$(dirname "$0")"
 

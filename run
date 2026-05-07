@@ -7,27 +7,34 @@ export SCAN_DATE=$(date +%Y%m%d)
 echo "扫描任务日期: $SCAN_DATE"
 
 reset_network() {
-    echo "    [INFO] Resetting network interface..." >&2
+    echo "    [INFO] Force resetting network interface..." >&2
+     
+    # 暴力断开连接
     nmcli device disconnect eth0 2>/dev/null || true
-    sleep 2
+    sleep 5
+    
+    # 重新连接
     nmcli device connect eth0 2>/dev/null || true
-    sleep 8
+    sleep 10
 
+    # 检查 IPv4 是否恢复
     if ip -4 addr show eth0 | grep -q 'inet '; then
         echo "    [OK] Network reset successful: $(ip -4 addr show eth0 | grep 'inet ' | awk '{print $2}')" >&2
         return 0
-    else
-        echo "    [WARN] IPv4 not ready, restarting NetworkManager..." >&2
-        systemctl restart NetworkManager 2>/dev/null || true
-        sleep 12
+    fi
+    
+    # 如果失败，重启 NetworkManager
+    echo "    [WARN] Device reconnect failed, restarting NetworkManager..." >&2
+    systemctl restart NetworkManager 2>/dev/null || true
+    sleep 15
 
-        if ip -4 addr show eth0 | grep -q 'inet '; then
-            echo "    [OK] Network recovered: $(ip -4 addr show eth0 | grep 'inet ' | awk '{print $2}')" >&2
-            return 0
-        else
-            echo "    [FATAL] Cannot recover IPv4!" >&2
-            exit 1
-        fi
+    if ip -4 addr show eth0 | grep -q 'inet '; then
+        echo "    [OK] Network recovered: $(ip -4 addr show eth0 | grep 'inet ' | awk '{print $2}')" >&2
+        return 0
+    else
+        echo "    [FATAL] Cannot recover IPv4!" >&2
+        ip -4 addr show eth0 >&2
+        exit 1
     fi
 }
 
@@ -65,6 +72,9 @@ reset_network
 
 echo "========== 合并所有结果 =========="
 ./process
+
+echo "========== 最终网络重置 =========="
+reset_network
 
 echo "全部完成！最终结果: $SCAN_DATE/service_all"
 

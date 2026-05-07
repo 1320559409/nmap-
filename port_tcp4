@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 # IPv4 TCP 端口扫描（手机热点优化：速率100~300包/秒）
 cd "$(dirname "$0")"
 

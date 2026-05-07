@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 # IPv6 UDP 服务探测（并行度3，限速50，重试3，带进度，自动清理）
 cd "$(dirname "$0")"
 

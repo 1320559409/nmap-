@@ -1,108 +1,114 @@
-21	FTP
-22	SSH
-23	Telnet
-110	POP3
-135	dcerpc-协议
-139	NetBIOS
-143	IMAP
-443	Harbor、Nagios
-445	SMB-协议
-587	SMTP
-636	LDAP-服务
-873	Rsync服务
-1080	socks
-1099	JRMP-协议
-1433	SQL Server
-1521	Oracle
-1883	mosquitto
-2049	NFS
-2181	Zookeeper
-2222	DA虚拟主机管理系统登陆
-2375	docker
-2379	etcd
-2888	zookeeper
-3000	LangChain
-3128	Squid
-3306	MySQL服务
-3389	RDP服务
-3690	SVN
-3888	Zookeeper
-4000	Spark
-4040	spark webUI
-4369	Erlang epmd
-4440	Spark
-4848	GlassFish控制台
-4899	Radmin
-5000	SYbase / DB2
-5005	JDWP
-5037	ADB
-5432	PostgreSQL服务
-5601	Kibana
-5631	Symantec PCanywhere
-5632	Pcanywhere
-5673	amqp
-5900	VNC
-5984	CouchDB
-6123	flink
-6379	Redis服务
-7001	WebLogic 管控服务
-7051	Hadoop Kudu
-7077	Spark
-7180	CDH
-7182	CDH
-7848	Nacos JRAFT
-8000	JDWP-服务
-8009	AJP
-8019	Hadoop
-8020	Hadoop
-8042	Hadoop Yarn
-8048	kafka-eagle
-8051	Hadoop Kudu
-8069	Zabbix 控制台服务
-8080	GlassFish、JBoss 控制台服务
-8081	flink
-8083	influxDB
-8086	influxDB
-8088	Hadoop
-8123	Clickhouse
-8161	Apache ActiveMQ
-8443	Hadoop Azkaban
-8848	Nacos
-8880	WebSphere 控制台服务
-8883	mosquitto SSL
-8888	Hadoop HUE
-8999	php-fpm
-9000	Clickhouse
-9001	Supervisord
-9004	Clickhouse
-9042	Cassandra
-9043	WebSphere 控制台服务
-9083	Hive
-9092	Kafka
-9100	ElasticSearch
-9200	Elasticsearch
-9300	Elasticsearch
-9876	RocketMQ-协议
-9990	JBoss 控制台服务
-10000	hive client
-10909	RocketMQ-协议
-10911	RocketMQ
-11000	Hadoop Oozie
-11111	canal
-11211	Memcached协议
-11434	Ollama
-18080	Spark
-19888	Hadoop、historyserver
-20880	Apache Dubbo
-25000	impala
-25010	impala
-27017	MongoDB服务
-27018	Mongodb
-50000	DB2
-50030	hadoop
-50070	hadoop
-50090	Hadoop
-60000	Hbase
-60010	Hbase
-60030	Hbase
-61616	Apache ActiveMQ
+21
+22
+23
+110
+111
+135
+139
+143
+389
+427
+443
+445
+502
+554
+587
+636
+873
+1080
+1099
+1433
+1521
+1883
+2049
+2181
+2222
+2375
+2379
+2888
+3000
+3128
+3306
+3389
+3690
+3888
+4000
+4040
+4369
+4440
+4848
+4899
+5000
+5005
+5037
+5432
+5601
+5631
+5673
+5900
+5984
+6123
+6379
+7001
+7051
+7077
+7180
+7182
+7848
+8000
+8009
+8019
+8020
+8042
+8048
+8051
+8069
+8080
+8081
+8083
+8086
+8088
+8123
+8161
+8443
+8649
+8848
+8880
+8883
+8888
+8999
+9000
+9001
+9004
+9042
+9043
+9083
+9092
+9100
+9200
+9300
+9876
+9990
+10000
+10909
+10911
+11000
+11111
+11211
+11434
+18080
+19888
+20880
+25000
+25010
+27017
+27018
+50000
+50030
+50070
+50090
+60000
+60010
+60030
+61616
+53
