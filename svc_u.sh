@@ -144,13 +144,13 @@ PORTS="\$3"
 OUTFILE="\$4"
 INDEX="\$5"
 if [ "\$IP_VERSION" = "ipv6" ]; then
-    nmap -6 -sU -sV -v --version-intensity 8 -Pn -n \
+    nmap -6 -sU -sV -v --version-intensity 9 -Pn -n \
          --stats-every 6s -T3 \
          -p "\$PORTS" "\$TARGET_IP" -oG "\${OUTFILE}.\${INDEX}.raw" 2>&1
     awk -f parse.awk "\${OUTFILE}.\${INDEX}.raw" >> "\${OUTFILE}.\${INDEX}"
     rm -f "\${OUTFILE}.\${INDEX}.raw"
 else
-    nmap -sU -sV -v --version-intensity 8 -Pn -n \
+    nmap -sU -sV -v --version-intensity 9 -Pn -n \
          --stats-every 6s -T3 \
          -p "\$PORTS" "\$TARGET_IP" -oG "\${OUTFILE}.\${INDEX}.raw" 2>&1
     awk -f parse.awk "\${OUTFILE}.\${INDEX}.raw" >> "\${OUTFILE}.\${INDEX}"
